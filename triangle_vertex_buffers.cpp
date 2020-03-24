@@ -19,13 +19,17 @@ int main(int argc, char *argv[])
     std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
     std::cout << "Status: Using OpenGL " << glGetString(GL_VERSION) << std::endl;
 
+    float triangle[] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
+    unsigned int buffer = 0;
+    glGenBuffers(1, &buffer);
+    std::cout << "buffer id: " << buffer << std::endl;
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+
     glutDisplayFunc([]() {
         glClear(GL_COLOR_BUFFER_BIT);
-        glBegin(GL_TRIANGLES);
-        glVertex2f(-0.5f, -0.5f);
-        glVertex2f(0, 0.5f);
-        glVertex2f(0.5f, -0.5f);
-        glEnd();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         glutSwapBuffers();
     });
 
