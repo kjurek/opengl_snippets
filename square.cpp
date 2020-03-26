@@ -9,15 +9,32 @@ int main(int argc, char *argv[])
     try {
         create_window(argc, argv);
 
-        float triangle[] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
+        float square[] = {
+            -0.5f,
+            -0.5f, // 0 indice
+            0.5f,
+            -0.5f, // 1 indice
+            0.5f,
+            0.5f, // 2 indice
+            -0.5f,
+            0.5f, // 3 indice
+        };
+
+        unsigned int indicies[] = {0, 1, 2, 3, 2, 0};
+
         unsigned int buffer;
         glGenBuffers(1, &buffer);
         std::cout << "buffer id: " << buffer << std::endl;
         glBindBuffer(GL_ARRAY_BUFFER, buffer);
-        glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), triangle, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(square), square, GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
+        unsigned int ibo;
+        glGenBuffers(1, &ibo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
 
         std::string vertex_shader = read_file("../res/shaders/triangle.vert");
         std::string fragment_shader = read_file("../res/shaders/triangle.frag");
@@ -28,7 +45,7 @@ int main(int argc, char *argv[])
 
         glutDisplayFunc([]() {
             glClear(GL_COLOR_BUFFER_BIT);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
             glutSwapBuffers();
         });
 

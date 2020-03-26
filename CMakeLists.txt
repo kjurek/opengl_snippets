@@ -6,8 +6,11 @@ find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(OpenGL REQUIRED)
 
+add_executable(triangle_legacy_opengl triangle_legacy.cpp common.cpp)
+target_link_libraries(triangle_legacy_opengl ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+
 add_executable(triangle triangle.cpp common.cpp)
 target_link_libraries(triangle ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
 
-add_executable(triangle_vertex_buffers triangle_vertex_buffers.cpp common.cpp)
-target_link_libraries(triangle_vertex_buffers ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(square square.cpp common.cpp)
+target_link_libraries(square ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
