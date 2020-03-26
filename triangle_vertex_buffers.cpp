@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
-        std::string vertex_shader = read_file("../triangle_shader.vert");
-        std::string fragment_shader = read_file("../triangle_shader.frag");
+        std::string vertex_shader = read_file("../res/shaders/triangle.vert");
+        std::string fragment_shader = read_file("../res/shaders/triangle.frag");
 
         auto shader = create_shader(vertex_shader, fragment_shader);
         std::cout << "shader program id: " << shader << std::endl;
@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
         });
 
         glutMainLoop();
+        glDeleteProgram(shader);
     } catch (std::string const& e) {
         std::cerr << e << std::endl;
     }
