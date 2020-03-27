@@ -14,3 +14,6 @@ target_link_libraries(triangle ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBR
 
 add_executable(square square.cpp common.cpp)
 target_link_libraries(square ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+
+add_executable(triangle_uniform triangle_uniform.cpp common.cpp)
+target_link_libraries(triangle_uniform ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
