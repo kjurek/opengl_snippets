@@ -9,11 +9,11 @@ find_package(OpenGL REQUIRED)
 add_executable(triangle_legacy_opengl triangle_legacy.cpp common.cpp)
 target_link_libraries(triangle_legacy_opengl ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
 
-add_executable(triangle triangle.cpp common.cpp)
+add_executable(triangle triangle.cpp common.cpp vertex_buffer.cpp index_buffer.cpp)
 target_link_libraries(triangle ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
 
-add_executable(square square.cpp common.cpp)
+add_executable(square square.cpp common.cpp index_buffer.cpp vertex_buffer.cpp)
 target_link_libraries(square ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
 
-add_executable(triangle_uniform triangle_uniform.cpp common.cpp)
+add_executable(triangle_uniform triangle_uniform.cpp common.cpp vertex_buffer.cpp index_buffer.cpp)
 target_link_libraries(triangle_uniform ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
