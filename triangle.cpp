@@ -2,6 +2,8 @@
 
 #include "vertex_buffer.h"
 #include "index_buffer.h"
+#include "vertex_buffer_layout.h"
+#include "vertex_array.h"
 
 #include <iostream>
 #include <GL/glew.h>
@@ -23,12 +25,13 @@ int main(int argc, char *argv[])
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
 
+        static vertex_array va;
         vertex_buffer vb(triangle, sizeof(triangle));
+        vertex_buffer_layout vbl;
+        vbl.push<GLfloat>(2);
+        va.add_buffer(vb, vbl);
 
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-        index_buffer ib(indicies, sizeof(indicies));
+        static index_buffer ib(indicies, sizeof(indicies));
 
         std::string vertex_shader = read_file("../res/shaders/triangle.vert");
         std::string fragment_shader = read_file("../res/shaders/triangle.frag");
@@ -38,6 +41,10 @@ int main(int argc, char *argv[])
 
         glutDisplayFunc([]() {
             glClear(GL_COLOR_BUFFER_BIT);
+
+            va.bind();
+            ib.bind();
+
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
             glutSwapBuffers();
         });
