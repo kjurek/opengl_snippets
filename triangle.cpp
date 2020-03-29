@@ -21,10 +21,6 @@ int main(int argc, char *argv[])
         };
         unsigned int indicies[] = {0, 1, 2};
 
-        unsigned int vao;
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-
         static vertex_array va;
         vertex_buffer vb(triangle, sizeof(triangle));
         vertex_buffer_layout vbl;
