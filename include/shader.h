@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 class Shader
 {
@@ -17,8 +18,9 @@ private:
     std::string _vertex_shader_path;
     std::string _fragment_shader_path;
     unsigned int _renderer_id;
+    std::unordered_map<std::string, int> _uniform_location_cache;
 
-    int get_uniform_location(std::string const &name) const;
+    int get_uniform_location(std::string const &name);
     unsigned int create_shader(std::string const& vertex_shader, std::string const& fragment_shader);
     unsigned int compile_shader(unsigned int type, std::string const& source);
 };

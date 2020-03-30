@@ -38,12 +38,18 @@ void Shader::set_uniform_4f(std::string const &name, float f1, float f2, float f
     glUniform4f(location, f1, f2, f3, f4);
 }
 
-int Shader::get_uniform_location(const std::string &name) const
+int Shader::get_uniform_location(std::string const& name)
 {
+    if (_uniform_location_cache.count(name)) {
+        return _uniform_location_cache[name];
+    }
+
     auto location = glGetUniformLocation(_renderer_id, name.c_str());
     if (location == -1) {
         std::cout << "Warning: uniform '" << name << "' doesn't exist" << std::endl;
     }
+    _uniform_location_cache[name] = location;
+
     return location;
 }
 
