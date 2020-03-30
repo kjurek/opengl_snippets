@@ -4,6 +4,7 @@
 #include "index_buffer.h"
 #include "vertex_buffer_layout.h"
 #include "vertex_array.h"
+#include "shader.h"
 
 #include <iostream>
 #include <GL/glew.h>
@@ -18,22 +19,19 @@ int main(int argc, char *argv[])
 
         unsigned int indicies[] = {0, 1, 2};
 
-        static vertex_array va;
-        vertex_buffer vb(triangle, sizeof(triangle));
-        vertex_buffer_layout vbl;
+        static VertexArray va;
+        VertexBuffer vb(triangle, sizeof(triangle));
+        VertexBufferLayout vbl;
         vbl.push<GLfloat>(2);
         va.add_buffer(vb, vbl);
 
-        static index_buffer ib(indicies, sizeof(indicies));
+        static IndexBuffer ib(indicies, sizeof(indicies));
+        static Shader shader("../res/shaders/triangle.vert", "../res/shaders/triangle_uniform.frag");
 
-        std::string vertex_shader = read_file("../res/shaders/triangle.vert");
-        std::string fragment_shader = read_file("../res/shaders/triangle_uniform.frag");
-
-        auto shader = create_shader(vertex_shader, fragment_shader);
-        glUseProgram(shader);
-
-        static int location;
-        location = glGetUniformLocation(shader, "u_color");
+        va.unbind();
+        shader.unbind();
+        vb.unbind();
+        ib.unbind();
 
         static float r = 0.5f;
         static float increment = 0.05f;
@@ -43,8 +41,9 @@ int main(int argc, char *argv[])
 
             va.bind();
             ib.bind();
+            shader.bind();
 
-            glUniform4f(location, r, 0, 0, 1.0);
+            shader.set_uniform_4f("u_color", r, 0, 0, 1);
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
             glutSwapBuffers();
 
@@ -60,7 +59,6 @@ int main(int argc, char *argv[])
         glutDisplayFunc(render);
 
         glutMainLoop();
-        glDeleteProgram(shader);
     } catch (std::string const& e) {
         std::cerr << e << std::endl;
     }

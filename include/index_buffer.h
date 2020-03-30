@@ -1,10 +1,10 @@
 #pragma once
 
-class index_buffer
+class IndexBuffer
 {
 public:
-    index_buffer(void const* data, unsigned int size);
-    ~index_buffer();
+    IndexBuffer(void const* data, unsigned int size);
+    ~IndexBuffer();
 
     void bind() const;
     void unbind() const;

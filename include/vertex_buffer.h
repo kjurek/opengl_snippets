@@ -1,10 +1,10 @@
 #pragma once
 
-class vertex_buffer
+class VertexBuffer
 {
 public:
-    vertex_buffer(void const* data, unsigned int size);
-    ~vertex_buffer();
+    VertexBuffer(void const* data, unsigned int size);
+    ~VertexBuffer();
 
     void bind() const;
     void unbind() const;

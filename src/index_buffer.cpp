@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 
-index_buffer::index_buffer(void const* data, unsigned int size)
+IndexBuffer::IndexBuffer(void const* data, unsigned int size)
     :   _size(size)
 {
     glGenBuffers(1, &_renderer_id);
@@ -11,17 +11,17 @@ index_buffer::index_buffer(void const* data, unsigned int size)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-index_buffer::~index_buffer()
+IndexBuffer::~IndexBuffer()
 {
     glDeleteBuffers(1, &_renderer_id);
 }
 
-void index_buffer::bind() const
+void IndexBuffer::bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _renderer_id);
 }
 
-void index_buffer::unbind() const
+void IndexBuffer::unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

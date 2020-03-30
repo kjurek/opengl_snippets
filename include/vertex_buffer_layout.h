@@ -5,7 +5,7 @@
 
 #include <GL/glew.h>
 
-struct vertex_buffer_element
+struct VertexBbufferElement
 {
     unsigned int type;
     unsigned int count;
@@ -29,25 +29,25 @@ struct vertex_buffer_element
 namespace  {
 
 template<typename T>
-vertex_buffer_element create_element(unsigned int count)
+VertexBbufferElement create_element(unsigned int count)
 {
     assert(false);
 }
 
 template<>
-vertex_buffer_element create_element<float>(unsigned int count)
+VertexBbufferElement create_element<float>(unsigned int count)
 {
     return {GL_FLOAT, count, GL_FALSE};
 }
 
 template<>
-vertex_buffer_element create_element<unsigned int>(unsigned int count)
+VertexBbufferElement create_element<unsigned int>(unsigned int count)
 {
     return {GL_UNSIGNED_INT, count, GL_FALSE};
 }
 
 template<>
-vertex_buffer_element create_element<unsigned char>(unsigned int count)
+VertexBbufferElement create_element<unsigned char>(unsigned int count)
 {
     return {GL_UNSIGNED_BYTE, count, GL_TRUE};
 }
@@ -55,10 +55,10 @@ vertex_buffer_element create_element<unsigned char>(unsigned int count)
 }
 
 
-class vertex_buffer_layout
+class VertexBufferLayout
 {
 public:
-    vertex_buffer_layout();
+    VertexBufferLayout();
 
     template<typename T>
     void push(unsigned int count)
@@ -68,10 +68,10 @@ public:
         _stride += count * sizeof(T);
     }
 
-    std::vector<vertex_buffer_element> const& get_elements() const;
+    std::vector<VertexBbufferElement> const& get_elements() const;
     unsigned int get_stride() const;
 
 private:
-    std::vector<vertex_buffer_element> _elements;
+    std::vector<VertexBbufferElement> _elements;
     unsigned int _stride;
 };

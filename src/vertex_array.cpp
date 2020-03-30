@@ -1,16 +1,16 @@
 #include "vertex_array.h"
 
-vertex_array::vertex_array()
+VertexArray::VertexArray()
 {
     glGenVertexArrays(1, &_renderer_id);
 }
 
-vertex_array::~vertex_array()
+VertexArray::~VertexArray()
 {
     glDeleteVertexArrays(1, &_renderer_id);
 }
 
-void vertex_array::add_buffer(vertex_buffer const &vb, vertex_buffer_layout const &vbl) const
+void VertexArray::add_buffer(VertexBuffer const &vb, VertexBufferLayout const &vbl) const
 {
     bind();
     vb.bind();
@@ -29,12 +29,12 @@ void vertex_array::add_buffer(vertex_buffer const &vb, vertex_buffer_layout cons
     }
 }
 
-void vertex_array::bind() const
+void VertexArray::bind() const
 {
     glBindVertexArray(_renderer_id);
 }
 
-void vertex_array::unbind() const
+void VertexArray::unbind() const
 {
     glBindVertexArray(0);
 }

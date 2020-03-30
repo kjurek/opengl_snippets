@@ -3,6 +3,7 @@
 #include "vertex_buffer.h"
 #include "index_buffer.h"
 #include "vertex_array.h"
+#include "shader.h"
 
 #include <iostream>
 #include <GL/glew.h>
@@ -26,32 +27,32 @@ int main(int argc, char *argv[])
 
         unsigned int indicies[] = {0, 1, 2, 3, 2, 0};
 
-        static vertex_array va;
-        vertex_buffer vb(square, sizeof(square));
-        vertex_buffer_layout vbl;
+        static VertexArray va;
+        VertexBuffer vb(square, sizeof(square));
+        VertexBufferLayout vbl;
         vbl.push<GLfloat>(2);
         va.add_buffer(vb, vbl);
 
-        static index_buffer ib(indicies, sizeof(indicies));
+        static IndexBuffer ib(indicies, sizeof(indicies));
+        static Shader shader("../res/shaders/triangle.vert", "../res/shaders/triangle.frag");
 
-        std::string vertex_shader = read_file("../res/shaders/triangle.vert");
-        std::string fragment_shader = read_file("../res/shaders/triangle.frag");
-
-        auto shader = create_shader(vertex_shader, fragment_shader);
-        glUseProgram(shader);
+        va.unbind();
+        shader.unbind();
+        vb.unbind();
+        ib.unbind();
 
         glutDisplayFunc([]() {
             glClear(GL_COLOR_BUFFER_BIT);
 
             va.bind();
             ib.bind();
+            shader.bind();
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
             glutSwapBuffers();
         });
 
         glutMainLoop();
-        glDeleteProgram(shader);
     } catch (std::string const& e) {
         std::cerr << e << std::endl;
     }

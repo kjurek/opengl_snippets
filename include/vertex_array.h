@@ -3,13 +3,13 @@
 #include "vertex_buffer.h"
 #include "vertex_buffer_layout.h"
 
-class vertex_array
+class VertexArray
 {
 public:
-    vertex_array();
-    ~vertex_array();
+    VertexArray();
+    ~VertexArray();
 
-    void add_buffer(vertex_buffer const &vb, vertex_buffer_layout const &vbl) const;
+    void add_buffer(VertexBuffer const &vb, VertexBufferLayout const &vbl) const;
     void bind() const;
     void unbind() const;
 
