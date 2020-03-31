@@ -17,6 +17,8 @@ set(GL_WRAPPER_SOURCES
     src/vertex_buffer_layout.cpp
     src/shader.cpp
     src/renderer.cpp
+    src/texture.cpp
+    src/stb/stb_image.cpp
 )
 
 include_directories(include)
@@ -32,3 +34,6 @@ target_link_libraries(square ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRAR
 
 add_executable(triangle_uniform src/examples/triangle_uniform.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
 target_link_libraries(triangle_uniform ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+
+add_executable(triangle_texture src/examples/triangle_texture.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
+target_link_libraries(triangle_texture ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})

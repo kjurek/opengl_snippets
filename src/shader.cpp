@@ -38,6 +38,18 @@ void Shader::set_uniform_4f(std::string const &name, float f1, float f2, float f
     glUniform4f(location, f1, f2, f3, f4);
 }
 
+void Shader::set_uniform_1f(std::string const& name, float value)
+{
+    auto location = get_uniform_location(name);
+    glUniform1f(location, value);
+}
+
+void Shader::set_uniform_1i(std::string const& name, int value)
+{
+    auto location = get_uniform_location(name);
+    glUniform1i(location, value);
+}
+
 int Shader::get_uniform_location(std::string const& name)
 {
     if (_uniform_location_cache.count(name)) {
