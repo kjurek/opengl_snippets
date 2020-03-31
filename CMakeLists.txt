@@ -16,6 +16,7 @@ set(GL_WRAPPER_SOURCES
     src/vertex_array.cpp
     src/vertex_buffer_layout.cpp
     src/shader.cpp
+    src/renderer.cpp
 )
 
 include_directories(include)

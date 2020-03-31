@@ -4,6 +4,7 @@
 #include "index_buffer.h"
 #include "vertex_array.h"
 #include "shader.h"
+#include "renderer.h"
 
 #include <iostream>
 #include <GL/glew.h>
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
         vbl.push<GLfloat>(2);
         va.add_buffer(vb, vbl);
 
-        static IndexBuffer ib(indicies, sizeof(indicies));
+        static IndexBuffer ib(indicies, 6);
         static Shader shader("../res/shaders/triangle.vert", "../res/shaders/triangle.frag");
 
         va.unbind();
@@ -41,14 +42,11 @@ int main(int argc, char *argv[])
         vb.unbind();
         ib.unbind();
 
+        static Renderer renderer;
+
         glutDisplayFunc([]() {
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            va.bind();
-            ib.bind();
-            shader.bind();
-
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            renderer.clear();
+            renderer.draw(va, ib, shader);
             glutSwapBuffers();
         });
 
