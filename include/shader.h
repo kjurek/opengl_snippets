@@ -3,6 +3,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "glm/glm/glm.hpp"
+
 class Shader
 {
 public:
@@ -15,6 +17,7 @@ public:
     void set_uniform_4f(std::string const &name, float f1, float f2, float f3, float f4);
     void set_uniform_1f(std::string const &name, float value);
     void set_uniform_1i(std::string const &name, int value);
+    void set_uniform_mat4f(std::string const &name, glm::mat4 mat);
 
 private:
     std::string _vertex_shader_path;

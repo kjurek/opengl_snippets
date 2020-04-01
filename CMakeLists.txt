@@ -22,6 +22,7 @@ set(GL_WRAPPER_SOURCES
 )
 
 include_directories(include)
+include_directories(deps)
 
 add_executable(triangle_legacy_opengl src/examples/triangle_legacy.cpp src/common.cpp)
 target_link_libraries(triangle_legacy_opengl ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
@@ -40,3 +41,6 @@ target_link_libraries(triangle_texture ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPE
 
 add_executable(square_blend src/examples/square_blend.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
 target_link_libraries(square_blend ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+
+add_executable(square_proj_matrix src/examples/square_proj_matrix.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
+target_link_libraries(square_proj_matrix ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})

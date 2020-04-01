@@ -50,6 +50,12 @@ void Shader::set_uniform_1i(std::string const& name, int value)
     glUniform1i(location, value);
 }
 
+void Shader::set_uniform_mat4f(const std::string &name, glm::mat4 mat)
+{
+    auto location = get_uniform_location(name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
+}
+
 int Shader::get_uniform_location(std::string const& name)
 {
     if (_uniform_location_cache.count(name)) {
