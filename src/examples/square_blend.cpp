@@ -2,10 +2,10 @@
 
 #include "vertex_buffer.h"
 #include "index_buffer.h"
-#include "vertex_buffer_layout.h"
 #include "vertex_array.h"
 #include "shader.h"
 #include "renderer.h"
+#include "texture.h"
 
 #include <iostream>
 #include <GL/glew.h>
@@ -16,21 +16,30 @@ int main(int argc, char *argv[])
     try {
         create_window(argc, argv);
 
-        float triangle[] = {
-            -0.5f, -0.5f,
-            0.0f, 0.5f,
-            0.5f, -0.5f
+        float square[] = {
+            -0.5f, -0.5f, 0.0f, 0.0f,
+            0.5f, -0.5f, 1.0f, 0.0f,
+            0.5f, 0.5f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 1.0f
         };
-        unsigned int indicies[] = {0, 1, 2};
+
+        unsigned int indicies[] = {0, 1, 2, 3, 2, 0};
 
         static VertexArray va;
-        VertexBuffer vb(triangle, sizeof(triangle));
+        VertexBuffer vb(square, sizeof(square));
         VertexBufferLayout vbl;
+        vbl.push<GLfloat>(2);
         vbl.push<GLfloat>(2);
         va.add_buffer(vb, vbl);
 
-        static IndexBuffer ib(indicies, 3);
-        static Shader shader("../res/shaders/color.vert", "../res/shaders/color.frag");
+        static IndexBuffer ib(indicies, 6);
+        static Shader shader("../res/shaders/texture.vert", "../res/shaders/texture_blend.frag");
+        shader.bind();
+        shader.set_uniform_4f("u_color", 1.0f, 0.5f, 0.0f, 0.5f);
+
+        Texture texture("../res/textures/github_logo.png");
+        texture.bind();
+        shader.set_uniform_1i("u_texture", 0);
 
         va.unbind();
         shader.unbind();

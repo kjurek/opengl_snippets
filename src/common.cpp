@@ -30,7 +30,6 @@ void create_window(int argc, char **argv, unsigned width, unsigned height, std::
     if (GLEW_OK != err) {
         throw glewGetErrorString(err);
     }
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 #ifndef NDEBUG
     glEnable(GL_DEBUG_OUTPUT);

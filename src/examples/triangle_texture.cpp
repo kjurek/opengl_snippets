@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 
         float triangle[]
             = { -0.5f, -0.5f, 0.0f, 0.0f,
-               0.0f, 0.5f, 1.0f, 1.0f,
-               0.5f, -0.5f, 0.0f, 1.0f};
+               0.0f, 0.5f, 1.0f, 0.0f,
+               0.5f, -0.5f, 1.0f, 1.0f};
 
         unsigned int indicies[] = {0, 1, 2};
 
@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
         va.add_buffer(vb, vbl);
 
         static IndexBuffer ib(indicies, 3);
-        static Shader shader("../res/shaders/triangle_texture.vert",
-                             "../res/shaders/triangle_texture.frag");
+        static Shader shader("../res/shaders/texture.vert",
+                             "../res/shaders/texture.frag");
         shader.bind();
 
         Texture texture("../res/textures/texture.jpg");

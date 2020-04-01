@@ -37,3 +37,6 @@ target_link_libraries(triangle_uniform ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPE
 
 add_executable(triangle_texture src/examples/triangle_texture.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
 target_link_libraries(triangle_texture ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+
+add_executable(square_blend src/examples/square_blend.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
+target_link_libraries(square_blend ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})

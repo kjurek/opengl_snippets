@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         va.add_buffer(vb, vbl);
 
         static IndexBuffer ib(indicies, 6);
-        static Shader shader("../res/shaders/triangle.vert", "../res/shaders/triangle.frag");
+        static Shader shader("../res/shaders/color.vert", "../res/shaders/color.frag");
 
         va.unbind();
         shader.unbind();
