@@ -37,12 +37,15 @@ int main(int argc, char *argv[])
 
         static IndexBuffer ib(indicies, 6);
 
-        glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f); // 4:3 aspect ratio
+        glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f); // 4:3 aspect ratio, narmalize any space into -1 to 1 space for every axis
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0)); // move camera
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.5, 0.5, 0)); // move/scale objects
+        glm::mat4 mvp = proj * view * model;
 
         static Shader shader("../res/shaders/texture_proj.vert", "../res/shaders/texture_blend.frag");
         shader.bind();
         shader.set_uniform_4f("u_color", 1.0f, 0.5f, 0.0f, 0.5f);
-        shader.set_uniform_mat4f("u_mvp", proj);
+        shader.set_uniform_mat4f("u_mvp", mvp);
 
         Texture texture("../res/textures/github_logo.png");
         texture.bind();
