@@ -13,7 +13,7 @@
 int main()
 {
     try {
-        Window window(640, 480, "Square blend");
+        glfw::Window window(640, 480, "Square blend");
 
         float square[] = {
             -0.5f, -0.5f, 0.0f, 0.0f,

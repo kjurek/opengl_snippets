@@ -4,28 +4,37 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace  {
+namespace {
 
 void debug_callback(GLenum source,
                     GLenum type,
                     GLuint id,
                     GLenum severity,
                     GLsizei length,
-                    GLchar const* message,
-                    void const* userParam)
+                    GLchar const *message,
+                    void const *userParam)
 {
-    fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+    fprintf(stderr,
+            "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+            type,
+            severity,
+            message);
 }
 
-}
+} // namespace
 
-Window::Window(unsigned int width, unsigned int height, std::string const& title)
+namespace glfw {
+
+Window::Window(unsigned int width, unsigned int height, std::string const &title)
 {
     if (!glfwInit()) {
         throw "ERROR: Couldn't init glfw";
     }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     _window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     if (!_window) {
@@ -43,9 +52,7 @@ Window::Window(unsigned int width, unsigned int height, std::string const& title
 #ifndef NDEBUG
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(
-        debug_callback,
-        nullptr);
+    glDebugMessageCallback(debug_callback, nullptr);
     glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 #endif
 
@@ -55,6 +62,7 @@ Window::Window(unsigned int width, unsigned int height, std::string const& title
 
 Window::~Window()
 {
+    glfwDestroyWindow(_window);
     glfwTerminate();
 }
 
@@ -66,3 +74,5 @@ void Window::run(std::function<void()> callback)
         glfwPollEvents();
     }
 }
+
+} // namespace glfw

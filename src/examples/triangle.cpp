@@ -13,7 +13,7 @@
 int main()
 {
     try {
-        Window window(640, 480, "Triangle");
+        glfw::Window window(640, 480, "Triangle");
 
         float triangle[] = {
             -0.5f, -0.5f,

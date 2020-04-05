@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.17)
 
 project(opengl_snippets)
 
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(glfw3 REQUIRED)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -19,17 +15,22 @@ set(GL_WRAPPER_SOURCES
     src/renderer.cpp
     src/texture.cpp
     src/glfw_window.cpp
-    src/stb/stb_image.cpp
+    src/imgui_window.cpp
 )
 
-add_library(gl_wrapper ${GL_WRAPPER_SOURCES})
-target_link_libraries(gl_wrapper ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} glfw)
+add_subdirectory(deps)
 
 include_directories(include)
 include_directories(deps)
 
+add_library(gl_wrapper ${GL_WRAPPER_SOURCES})
+target_link_libraries(gl_wrapper deps)
+
 add_executable(glfw_window src/examples/glfw_window.cpp)
 target_link_libraries(glfw_window gl_wrapper)
+
+add_executable(imgui_window src/examples/imgui_window.cpp)
+target_link_libraries(imgui_window gl_wrapper)
 
 add_executable(triangle_legacy_opengl src/examples/triangle_legacy.cpp)
 target_link_libraries(triangle_legacy_opengl gl_wrapper)

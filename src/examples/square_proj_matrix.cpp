@@ -16,7 +16,7 @@
 int main()
 {
     try {
-        Window window(640, 480, "Square projection matrix");
+        glfw::Window window(640, 480, "Square projection matrix");
 
         float square[] = {
             -0.5f, -0.5f, 0.0f, 0.0f,

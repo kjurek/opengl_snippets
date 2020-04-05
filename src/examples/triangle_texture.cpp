@@ -14,7 +14,7 @@
 int main()
 {
     try {
-        Window window(640, 480, "Triangle with texture");
+        glfw::Window window(640, 480, "Triangle with texture");
 
         float triangle[]
             = { -0.5f, -0.5f, 0.0f, 0.0f,

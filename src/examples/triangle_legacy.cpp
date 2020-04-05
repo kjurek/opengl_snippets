@@ -7,7 +7,7 @@
 int main()
 {
     try {
-        Window window(640, 480, "Triangle using legacy OpenGL");
+        glfw::Window window(640, 480, "Triangle using legacy OpenGL");
 
         window.run([]() {
             glClear(GL_COLOR_BUFFER_BIT);

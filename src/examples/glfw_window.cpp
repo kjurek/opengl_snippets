@@ -1,11 +1,11 @@
-#include <iostream>
 #include <GL/glew.h>
+#include <iostream>
 
 #include "glfw_window.h"
 
 int main()
 {
-    Window window(640, 480, "Hello world");
+    glfw::Window window(640, 480, "Hello world");
     window.run([]() {
         glClear(GL_COLOR_BUFFER_BIT);
         glBegin(GL_TRIANGLES);

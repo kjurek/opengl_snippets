@@ -11,7 +11,7 @@
 int main()
 {
     try {
-        Window window(640, 480, "Square");
+        glfw::Window window(640, 480, "Square");
 
         float square[] = {
             -0.5f,
