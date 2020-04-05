@@ -1,4 +1,4 @@
-#include "common.h"
+#include "glfw_window.h"
 
 #include "vertex_buffer.h"
 #include "index_buffer.h"
@@ -12,12 +12,11 @@
 
 #include <iostream>
 #include <GL/glew.h>
-#include <GL/glut.h>
 
-int main(int argc, char *argv[])
+int main()
 {
     try {
-        create_window(argc, argv);
+        Window window(640, 480, "Square projection matrix");
 
         float square[] = {
             -0.5f, -0.5f, 0.0f, 0.0f,
@@ -28,21 +27,21 @@ int main(int argc, char *argv[])
 
         unsigned int indicies[] = {0, 1, 2, 3, 2, 0};
 
-        static VertexArray va;
+        VertexArray va;
         VertexBuffer vb(square, sizeof(square));
         VertexBufferLayout vbl;
         vbl.push<GLfloat>(2);
         vbl.push<GLfloat>(2);
         va.add_buffer(vb, vbl);
 
-        static IndexBuffer ib(indicies, 6);
+        IndexBuffer ib(indicies, 6);
 
         glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f); // 4:3 aspect ratio, narmalize any space into -1 to 1 space for every axis
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0)); // move camera
         glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.5, 0.5, 0)); // move/scale objects
         glm::mat4 mvp = proj * view * model;
 
-        static Shader shader("../res/shaders/texture_proj.vert", "../res/shaders/texture_blend.frag");
+        Shader shader("../res/shaders/texture_proj.vert", "../res/shaders/texture_blend.frag");
         shader.bind();
         shader.set_uniform_4f("u_color", 1.0f, 0.5f, 0.0f, 0.5f);
         shader.set_uniform_mat4f("u_mvp", mvp);
@@ -56,15 +55,13 @@ int main(int argc, char *argv[])
         vb.unbind();
         ib.unbind();
 
-        static Renderer renderer;
+        Renderer renderer;
 
-        glutDisplayFunc([]() {
+        window.run([&]() {
             renderer.clear();
             renderer.draw(va, ib, shader);
-            glutSwapBuffers();
         });
 
-        glutMainLoop();
     } catch (std::string const& e) {
         std::cerr << e << std::endl;
     }

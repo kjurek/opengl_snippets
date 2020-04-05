@@ -1,5 +1,4 @@
 #include "shader.h"
-#include "common.h"
 
 #include <string>
 #include <fstream>
@@ -7,6 +6,18 @@
 
 #include <GL/glew.h>
 
+namespace {
+
+std::string read_file(std::string const &path)
+{
+    std::ifstream f(path);
+    if (!f) {
+        throw "Couldn't read file " + path;
+    }
+    return std::string((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+}
+
+}
 
 Shader::Shader(std::string const& vertex_shader_path, std::string const& fragment_shader_path)
     : _vertex_shader_path(vertex_shader_path), _fragment_shader_path(fragment_shader_path),

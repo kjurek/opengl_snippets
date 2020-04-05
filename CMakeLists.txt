@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.17)
 
 project(opengl_snippets)
 
-find_package(GLEW REQUIRED)
-find_package(GLUT REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(glfw3 REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,29 +18,36 @@ set(GL_WRAPPER_SOURCES
     src/shader.cpp
     src/renderer.cpp
     src/texture.cpp
+    src/glfw_window.cpp
     src/stb/stb_image.cpp
 )
+
+add_library(gl_wrapper ${GL_WRAPPER_SOURCES})
+target_link_libraries(gl_wrapper ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} glfw)
 
 include_directories(include)
 include_directories(deps)
 
-add_executable(triangle_legacy_opengl src/examples/triangle_legacy.cpp src/common.cpp)
-target_link_libraries(triangle_legacy_opengl ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(glfw_window src/examples/glfw_window.cpp)
+target_link_libraries(glfw_window gl_wrapper)
 
-add_executable(triangle src/examples/triangle.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
-target_link_libraries(triangle ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(triangle_legacy_opengl src/examples/triangle_legacy.cpp)
+target_link_libraries(triangle_legacy_opengl gl_wrapper)
 
-add_executable(square src/examples/square.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
-target_link_libraries(square ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(triangle src/examples/triangle.cpp)
+target_link_libraries(triangle gl_wrapper)
 
-add_executable(triangle_uniform src/examples/triangle_uniform.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
-target_link_libraries(triangle_uniform ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(square src/examples/square.cpp)
+target_link_libraries(square gl_wrapper)
 
-add_executable(triangle_texture src/examples/triangle_texture.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
-target_link_libraries(triangle_texture ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(triangle_uniform src/examples/triangle_uniform.cpp)
+target_link_libraries(triangle_uniform gl_wrapper)
 
-add_executable(square_blend src/examples/square_blend.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
-target_link_libraries(square_blend ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(triangle_texture src/examples/triangle_texture.cpp)
+target_link_libraries(triangle_texture gl_wrapper)
 
-add_executable(square_proj_matrix src/examples/square_proj_matrix.cpp src/common.cpp ${GL_WRAPPER_SOURCES})
-target_link_libraries(square_proj_matrix ${GLEW_LIBRARIES} ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(square_blend src/examples/square_blend.cpp)
+target_link_libraries(square_blend gl_wrapper)
+
+add_executable(square_proj_matrix src/examples/square_proj_matrix.cpp)
+target_link_libraries(square_proj_matrix gl_wrapper)

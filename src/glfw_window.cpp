@@ -1,10 +1,10 @@
-#include "common.h"
-
-#include <iostream>
-#include <fstream>
+#include "glfw_window.h"
 
 #include <GL/glew.h>
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+
+namespace  {
 
 void debug_callback(GLenum source,
                     GLenum type,
@@ -19,16 +19,25 @@ void debug_callback(GLenum source,
             type, severity, message );
 }
 
-void create_window(int argc, char **argv, unsigned width, unsigned height, std::string const &title)
+}
+
+Window::Window(unsigned int width, unsigned int height, std::string const& title)
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-    glutInitWindowSize(width, height);
-    glutInitWindowPosition(100, 100);
-    glutCreateWindow(title.c_str());
-    GLenum err = glewInit();
-    if (GLEW_OK != err) {
-        throw glewGetErrorString(err);
+    if (!glfwInit()) {
+        throw "ERROR: Couldn't init glfw";
+    }
+
+    _window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    if (!_window) {
+        glfwTerminate();
+        throw "ERROR: Couldn't create window";
+    }
+
+    glfwMakeContextCurrent(_window);
+
+    if (glewInit() != GLEW_OK) {
+        glfwTerminate();
+        throw "ERROR: Couldn't init glew";
     }
 
 #ifndef NDEBUG
@@ -44,11 +53,16 @@ void create_window(int argc, char **argv, unsigned width, unsigned height, std::
     std::cout << "Status: Using OpenGL " << glGetString(GL_VERSION) << std::endl;
 }
 
-std::string read_file(std::string const &path)
+Window::~Window()
 {
-    std::ifstream f(path);
-    if (!f) {
-        throw "Couldn't read file " + path;
+    glfwTerminate();
+}
+
+void Window::run(std::function<void()> callback)
+{
+    while (!glfwWindowShouldClose(_window)) {
+        callback();
+        glfwSwapBuffers(_window);
+        glfwPollEvents();
     }
-    return std::string((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
 }

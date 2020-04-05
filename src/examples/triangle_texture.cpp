@@ -1,4 +1,4 @@
-#include "common.h"
+#include "glfw_window.h"
 
 #include "vertex_buffer.h"
 #include "index_buffer.h"
@@ -10,12 +10,11 @@
 
 #include <iostream>
 #include <GL/glew.h>
-#include <GL/glut.h>
 
-int main(int argc, char *argv[])
+int main()
 {
     try {
-        create_window(argc, argv);
+        Window window(640, 480, "Triangle with texture");
 
         float triangle[]
             = { -0.5f, -0.5f, 0.0f, 0.0f,
@@ -24,16 +23,15 @@ int main(int argc, char *argv[])
 
         unsigned int indicies[] = {0, 1, 2};
 
-        static VertexArray va;
+        VertexArray va;
         VertexBuffer vb(triangle, sizeof(triangle));
         VertexBufferLayout vbl;
         vbl.push<GLfloat>(2);
         vbl.push<GLfloat>(2);
         va.add_buffer(vb, vbl);
 
-        static IndexBuffer ib(indicies, 3);
-        static Shader shader("../res/shaders/texture.vert",
-                             "../res/shaders/texture.frag");
+        IndexBuffer ib(indicies, 3);
+        Shader shader("../res/shaders/texture.vert", "../res/shaders/texture.frag");
         shader.bind();
 
         Texture texture("../res/textures/texture.jpg");
@@ -45,17 +43,13 @@ int main(int argc, char *argv[])
         vb.unbind();
         ib.unbind();
 
-        static Renderer renderer;
+        Renderer renderer;
 
-        auto render = []() {
+        window.run([&]() {
             renderer.clear();
             renderer.draw(va, ib, shader);
-            glutSwapBuffers();
-        };
+        });
 
-        glutDisplayFunc(render);
-
-        glutMainLoop();
     } catch (std::string const& e) {
         std::cerr << e << std::endl;
     }
