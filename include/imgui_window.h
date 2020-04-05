@@ -6,7 +6,7 @@
 
 namespace imgui {
 
-class Window : glfw::Window
+class Window : public glfw::Window
 {
 public:
     Window(unsigned int width, unsigned int height, std::string const &title);
