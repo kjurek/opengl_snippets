@@ -52,3 +52,6 @@ target_link_libraries(square_blend gl_wrapper)
 
 add_executable(square_proj_matrix src/examples/square_proj_matrix.cpp)
 target_link_libraries(square_proj_matrix gl_wrapper)
+
+add_executable(rendering_multiple_objects src/examples/rendering_multiple_objects.cpp)
+target_link_libraries(rendering_multiple_objects gl_wrapper)

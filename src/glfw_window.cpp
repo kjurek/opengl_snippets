@@ -56,6 +56,9 @@ Window::Window(unsigned int width, unsigned int height, std::string const &title
     glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 #endif
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
     std::cout << "Status: Using OpenGL " << glGetString(GL_VERSION) << std::endl;
 }
