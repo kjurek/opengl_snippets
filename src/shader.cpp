@@ -1,8 +1,8 @@
 #include "shader.h"
 
+#include <iostream>
 #include <string>
 #include <fstream>
-#include <iostream>
 
 #include <GL/glew.h>
 
