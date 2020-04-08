@@ -4,14 +4,14 @@
 
 #include <glm/glm/glm.hpp>
 
-class ClearColorExample : public Example
+class BackgroundColorExample : public Example
 {
 public:
-    ClearColorExample();
-    virtual ~ClearColorExample();
+    BackgroundColorExample();
+    virtual ~BackgroundColorExample();
 
     virtual void show_options() override;
-    virtual void show_example() override;
+    virtual void show_example(Renderer const& renderer) override;
     virtual std::string get_name() const override;
 
 private:

@@ -8,6 +8,8 @@
 #include "renderer.h"
 #include "texture.h"
 
+#include "shapes.h"
+
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtc/matrix_transform.hpp"
 
@@ -18,41 +20,20 @@ int main()
     try {
         imgui::Window window(960, 540, "Multiple objects");
 
-        float square[] = {
-            -50.0f, -50.0f, 0.0f, 0.0f,
-             50.0f, -50.0f, 1.0f, 0.0f,
-             50.0f,  50.0f, 1.0f, 1.0f,
-            -50.0f,  50.0f, 0.0f, 1.0f
-        };
-
-        unsigned int indicies[] = {0, 1, 2, 3, 2, 0};
-
-        VertexArray va;
-        VertexBuffer vb(square, sizeof(square));
-        VertexBufferLayout vbl;
-        vbl.push<GLfloat>(2);
-        vbl.push<GLfloat>(2);
-        va.add_buffer(vb, vbl);
-
-        IndexBuffer ib(indicies, 6);
+        auto square = shapes::rectangle(100, 100);
 
         glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f); // aspect ratio, narmalize any space into -1 to 1 space for every axis
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // move camera
         glm::vec3 translation_a(200, 200, 0);
         glm::vec3 translation_b(400, 200, 0);
 
-        Shader shader("../res/shaders/texture_proj.vert", "../res/shaders/texture_blend.frag");
+        Shader shader("../res/shaders/texture.vert", "../res/shaders/texture_blend.frag");
         shader.bind();
         shader.set_uniform_4f("u_color", 1.0f, 0.5f, 0.0f, 0.5f);
 
         Texture texture("../res/textures/github_logo.png");
         texture.bind();
         shader.set_uniform_1i("u_texture", 0);
-
-        va.unbind();
-        shader.unbind();
-        vb.unbind();
-        ib.unbind();
 
         Renderer renderer;
 
@@ -64,7 +45,7 @@ int main()
                 glm::mat4 mvp = proj * view * model;
                 shader.bind();
                 shader.set_uniform_mat4f("u_mvp", mvp);
-                renderer.draw(va, ib, shader);
+                renderer.draw(square->va, square->ib, shader);
             }
 
             {
@@ -72,7 +53,7 @@ int main()
                 glm::mat4 mvp = proj * view * model;
                 shader.bind();
                 shader.set_uniform_mat4f("u_mvp", mvp);
-                renderer.draw(va, ib, shader);
+                renderer.draw(square->va, square->ib, shader);
             }
 
             {

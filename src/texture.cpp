@@ -57,3 +57,8 @@ int Texture::get_height() const
 {
     return _height;
 }
+
+unsigned int Texture::get_id() const
+{
+    return _renderer_id;
+}

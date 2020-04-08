@@ -13,6 +13,8 @@ public:
 
     int get_width() const;
     int get_height() const;
+    unsigned int get_id() const;
+
 private:
     unsigned int _renderer_id;
     std::string _file_path;

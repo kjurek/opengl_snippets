@@ -9,4 +9,5 @@ class Renderer
 public:
     void clear() const;
     void draw(VertexArray const& va, IndexBuffer const& ib, Shader const& shader) const;
+    void draw(VertexArray const& va, IndexBuffer const& ib) const;
 };

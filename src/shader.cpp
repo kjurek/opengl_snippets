@@ -23,6 +23,7 @@ Shader::Shader(std::string const& vertex_shader_path, std::string const& fragmen
     : _vertex_shader_path(vertex_shader_path), _fragment_shader_path(fragment_shader_path),
       _renderer_id(0)
 {
+    std::cout << __FUNCTION__ << std::endl;
     std::string vertex_shader = read_file(vertex_shader_path);
     std::string fragment_shader = read_file(fragment_shader_path);
     _renderer_id = create_shader(vertex_shader, fragment_shader);

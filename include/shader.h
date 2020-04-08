@@ -8,7 +8,7 @@
 class Shader
 {
 public:
-    Shader(std::string const &vertex_shader_path, std::string const &fragment_shader_path);
+    Shader(std::string const& vertex_shader_path, std::string const& fragment_shader_path);
     ~Shader();
 
     void bind() const;

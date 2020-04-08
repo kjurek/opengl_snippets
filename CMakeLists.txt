@@ -29,20 +29,14 @@ target_link_libraries(gl_wrapper deps)
 add_executable(triangle_legacy_opengl src/examples/triangle_legacy.cpp)
 target_link_libraries(triangle_legacy_opengl gl_wrapper)
 
-add_executable(square_blend src/examples/square_blend.cpp)
-target_link_libraries(square_blend gl_wrapper)
-
-add_executable(square_proj_matrix src/examples/square_proj_matrix.cpp)
-target_link_libraries(square_proj_matrix gl_wrapper)
-
-add_executable(rendering_multiple_objects src/examples/rendering_multiple_objects.cpp)
+add_executable(rendering_multiple_objects src/examples/rendering_multiple_objects.cpp src/examples/shapes.cpp)
 target_link_libraries(rendering_multiple_objects gl_wrapper)
 
 add_executable(demo
     src/examples/demo.cpp
-    src/examples/clear_color_example.cpp
-    src/examples/triangle_example.cpp
-    src/examples/square_example.cpp
-    src/examples/texture_example.cpp
+    src/examples/background_color_example.cpp
+    src/examples/shape_example.cpp
+    src/examples/shapes.cpp
+    src/examples/materials.cpp
 )
 target_link_libraries(demo gl_wrapper)
