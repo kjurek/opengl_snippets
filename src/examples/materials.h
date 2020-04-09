@@ -31,3 +31,18 @@ public:
     Texture texture;
     glm::mat4 mvp;
 };
+
+struct TextureWithColorMaterial
+{
+public:
+    TextureWithColorMaterial();
+    ~TextureWithColorMaterial();
+
+    void bind();
+    void unbind();
+
+    Shader shader;
+    Texture texture;
+    glm::vec4 color;
+    glm::mat4 mvp;
+};

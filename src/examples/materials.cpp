@@ -47,3 +47,28 @@ void TextureMaterial::unbind()
     texture.unbind();
     shader.unbind();
 }
+
+TextureWithColorMaterial::TextureWithColorMaterial()
+    : shader("../res/shaders/texture.vert", "../res/shaders/texture_blend.frag"),
+      texture("../res/textures/github_logo.png"), color(1.0f)
+{}
+
+TextureWithColorMaterial::~TextureWithColorMaterial()
+{
+    unbind();
+}
+
+void TextureWithColorMaterial::bind()
+{
+    shader.bind();
+    texture.bind();
+    shader.set_uniform_mat4f("u_mvp", mvp);
+    shader.set_uniform_4f("u_color", color.r, color.g, color.b, color.a);
+    shader.set_uniform_1i("u_texture", 0);
+}
+
+void TextureWithColorMaterial::unbind()
+{
+    texture.unbind();
+    shader.unbind();
+}

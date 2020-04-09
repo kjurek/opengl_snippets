@@ -13,7 +13,7 @@ ShapeExample::ShapeExample(unsigned int width, unsigned int height)
       _current_material(0), _last_material(-1)
 {
     _shapes.push_back(shapes::triangle(50, 50));
-    _shapes.push_back(shapes::rectangle(100, 50));
+    _shapes.push_back(shapes::rectangle(50, 50));
 }
 
 ShapeExample::~ShapeExample()
