@@ -30,17 +30,14 @@ Window::~Window()
 
 void Window::run(std::function<void()> callback)
 {
-    while (!glfwWindowShouldClose(_window)) {
+    glfw::Window::run([&callback]() {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         callback();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        glfwSwapBuffers(_window);
-        glfwPollEvents();
-    }
+    });
 }
 
 } // namespace imgui
