@@ -4,8 +4,6 @@
 #include "materials.h"
 #include "shapes.h"
 
-#include <array>
-
 
 class MultipleObjectsExample : public Example
 {
