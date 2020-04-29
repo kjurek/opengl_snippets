@@ -14,6 +14,12 @@
 #include <memory>
 #include <vector>
 
+struct ExampleOption
+{
+    std::string name;
+    std::function<std::unique_ptr<Example>()> creator;
+};
+
 int main()
 {
     unsigned int const width = 640;
@@ -26,22 +32,22 @@ int main()
     std::unique_ptr<Example> current_example;
     Renderer renderer;
 
+    std::vector<ExampleOption> examples = {
+        {"Background", []() { return std::make_unique<BackgroundColorExample>(); }},
+        {"Shapes", [=](){ return std::make_unique<ShapeExample>(width, height); }},
+        {"Multiple objects", [=](){ return std::make_unique<MultipleObjectsExample>(width, height);}}
+    };
+
     window.run([&]() {
         renderer.clear();
         {
             ImGui::Begin("Demo");
-            ImGui::RadioButton("Background", &current_example_id, 0);
-            ImGui::RadioButton("Shapes", &current_example_id, 1);
-            ImGui::RadioButton("Multiple objects", &current_example_id, 2);
+            for (size_t i = 0; i < examples.size(); ++i) {
+                ImGui::RadioButton(examples[i].name.c_str(), &current_example_id, i);
+            }
 
             if (current_example_id != last_example_id) {
-                if (current_example_id == 0) {
-                    current_example = std::make_unique<BackgroundColorExample>();
-                } else if (current_example_id == 1) {
-                    current_example = std::make_unique<ShapeExample>(width, height);
-                } else if (current_example_id == 2) {
-                    current_example = std::make_unique<MultipleObjectsExample>(width, height);
-                }
+                current_example = examples[current_example_id].creator();
                 last_example_id = current_example_id;
             }
             current_example->show_example(renderer);
