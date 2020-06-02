@@ -29,9 +29,7 @@ target_link_libraries(gl_wrapper deps)
 add_executable(demo
     src/examples/demo.cpp
     src/examples/background_color_example.cpp
-    src/examples/shape_example.cpp
-    src/examples/multiple_objects_example.cpp
-    src/examples/shapes.cpp
-    src/examples/materials.cpp
+    src/examples/triangle_example.cpp
+    src/examples/rectangle_example.cpp
 )
 target_link_libraries(demo gl_wrapper)
