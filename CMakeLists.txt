@@ -31,5 +31,6 @@ add_executable(demo
     src/examples/background_color_example.cpp
     src/examples/triangle_example.cpp
     src/examples/rectangle_example.cpp
+    src/examples/texture_example.cpp
 )
 target_link_libraries(demo gl_wrapper)
