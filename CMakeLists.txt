@@ -33,5 +33,6 @@ add_executable(demo
     src/examples/rectangle_example.cpp
     src/examples/texture_example.cpp
     src/examples/multiple_objects_example.cpp
+    src/examples/batch_rendering_example.cpp
 )
 target_link_libraries(demo gl_wrapper)

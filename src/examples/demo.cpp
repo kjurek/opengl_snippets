@@ -12,6 +12,7 @@
 #include "rectangle_example.h"
 #include "texture_example.h"
 #include "multiple_objects_example.h"
+#include "batch_rendering_example.h"
 
 #include <memory>
 #include <vector>
@@ -39,7 +40,8 @@ int main()
            {"Triangle", [=]() { return std::make_unique<TriangleExample>(width, height); }},
            {"Rectangle", [=]() { return std::make_unique<RectangleExample>(width, height); }},
            {"Texture", [=]() { return std::make_unique<TextureExample>(width, height);}},
-           {"Multiple objects", [=]() { return std::make_unique<MultipleObjectsExample>(width, height);}}
+           {"Multiple objects", [=]() { return std::make_unique<MultipleObjectsExample>(width, height);}},
+           {"Batch rendering", [=]() { return std::make_unique<BatchRenderingExample>(width, height);}}
     };
 
     window.run([&]() {
