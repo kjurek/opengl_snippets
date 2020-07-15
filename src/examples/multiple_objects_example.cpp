@@ -27,8 +27,11 @@ void Object::bind(glm::mat4 const& proj, glm::mat4 const& view)
     auto mvp = proj * view * model;
 
     shader.bind();
-    shader.set_uniform_mat4f("u_mvp", mvp);
-    shader.set_uniform_4f("u_color", color.r, color.g, color.b, color.a);
+    auto loc_mvp = shader.uniform_location("u_mvp");
+    glUniformMatrix4fv(loc_mvp, 1, GL_FALSE, &mvp[0][0]);
+
+    auto loc_color = shader.uniform_location("u_color");
+    glUniform4f(loc_color, color.r, color.g, color.b, color.a);
 
     va.bind();
     vb.bind();

@@ -12,7 +12,7 @@
 
 namespace imgui {
 
-Window::Window(unsigned int width, unsigned int height, const std::string &title)
+Window::Window(unsigned int width, unsigned int height, std::string const& title)
     : glfw::Window(width, height, title)
 {
     ImGui::CreateContext();

@@ -26,7 +26,7 @@ void debug_callback(GLenum source,
 
 namespace glfw {
 
-Window::Window(unsigned int width, unsigned int height, std::string const &title)
+Window::Window(unsigned int width, unsigned int height, std::string const& title)
 {
     if (!glfwInit()) {
         throw "ERROR: Couldn't init glfw";

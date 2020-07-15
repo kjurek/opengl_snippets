@@ -24,7 +24,7 @@ void VertexArray::add_buffer(VertexBuffer const &vb, VertexBufferLayout const &v
                               element.type,
                               element.normalized,
                               vbl.get_stride(),
-                              (void const *) offset);
+                              reinterpret_cast<void const *>(offset));
         offset += element.count * element.get_size();
     }
 }

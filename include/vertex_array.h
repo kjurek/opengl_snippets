@@ -9,6 +9,9 @@ public:
     VertexArray();
     ~VertexArray();
 
+    VertexArray(VertexArray const&) = delete;
+    VertexArray& operator=(VertexArray const&) = delete;
+
     void add_buffer(VertexBuffer const &vb, VertexBufferLayout const &vbl) const;
     void bind() const;
     void unbind() const;

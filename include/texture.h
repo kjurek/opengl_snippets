@@ -8,6 +8,9 @@ public:
     Texture(std::string const &file_path);
     ~Texture();
 
+    Texture(Texture const&) = delete;
+    Texture& operator=(Texture const&) = delete;
+
     void bind(unsigned int slot = 0) const;
     void unbind() const;
 

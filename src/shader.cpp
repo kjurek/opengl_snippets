@@ -1,14 +1,13 @@
 #include "shader.h"
 
 #include <iostream>
-#include <string>
 #include <fstream>
 
 #include <GL/glew.h>
 
 namespace {
 
-std::string read_file(std::string const &path)
+std::string read_file(std::string const& path)
 {
     std::ifstream f(path);
     if (!f) {
@@ -20,11 +19,9 @@ std::string read_file(std::string const &path)
 }
 
 Shader::Shader(std::string const& vertex_shader_path, std::string const& fragment_shader_path)
-    : _vertex_shader_path(vertex_shader_path), _fragment_shader_path(fragment_shader_path),
-      _renderer_id(0)
 {
-    std::string vertex_shader = read_file(vertex_shader_path);
-    std::string fragment_shader = read_file(fragment_shader_path);
+    auto vertex_shader = read_file(vertex_shader_path);
+    auto fragment_shader = read_file(fragment_shader_path);
     _renderer_id = create_shader(vertex_shader, fragment_shader);
 }
 
@@ -43,31 +40,7 @@ void Shader::unbind() const
     glUseProgram(0);
 }
 
-void Shader::set_uniform_4f(std::string const &name, float f1, float f2, float f3, float f4)
-{
-    auto location = get_uniform_location(name);
-    glUniform4f(location, f1, f2, f3, f4);
-}
-
-void Shader::set_uniform_1f(std::string const& name, float value)
-{
-    auto location = get_uniform_location(name);
-    glUniform1f(location, value);
-}
-
-void Shader::set_uniform_1i(std::string const& name, int value)
-{
-    auto location = get_uniform_location(name);
-    glUniform1i(location, value);
-}
-
-void Shader::set_uniform_mat4f(const std::string &name, glm::mat4 mat)
-{
-    auto location = get_uniform_location(name);
-    glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
-}
-
-int Shader::get_uniform_location(std::string const& name)
+int Shader::uniform_location(std::string const& name)
 {
     if (_uniform_location_cache.count(name)) {
         return _uniform_location_cache[name];
@@ -99,7 +72,7 @@ unsigned int Shader::create_shader(std::string const& vertex_shader, std::string
     return program;
 }
 
-unsigned int Shader::compile_shader(unsigned int type, const std::string &source)
+unsigned int Shader::compile_shader(unsigned int type, std::string const& source)
 {
     auto id = glCreateShader(type);
     auto cstr = source.c_str();

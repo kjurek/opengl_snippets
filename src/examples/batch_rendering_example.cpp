@@ -66,7 +66,8 @@ void BatchRenderingExample::show_example(Renderer const &renderer)
     glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
     auto mvp = proj * view * model;
     shader.bind();
-    shader.set_uniform_mat4f("u_mvp", mvp);
+    auto loc = shader.uniform_location("u_mvp");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, &mvp[0][0]);
     renderer.draw(va, ib);
 }
 
