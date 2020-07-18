@@ -6,6 +6,9 @@ public:
     IndexBuffer(void const* data, unsigned int count);
     ~IndexBuffer();
 
+    IndexBuffer(IndexBuffer&& ib) noexcept;
+    IndexBuffer& operator=(IndexBuffer&& ib) noexcept;
+
     IndexBuffer(IndexBuffer const&) = delete;
     IndexBuffer& operator=(IndexBuffer const&) = delete;
 

@@ -9,6 +9,9 @@ public:
     VertexArray();
     ~VertexArray();
 
+    VertexArray(VertexArray&& va) noexcept;
+    VertexArray& operator=(VertexArray&& va) noexcept;
+
     VertexArray(VertexArray const&) = delete;
     VertexArray& operator=(VertexArray const&) = delete;
 

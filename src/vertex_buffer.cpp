@@ -1,7 +1,7 @@
 #include "vertex_buffer.h"
 
+#include <utility>
 #include <GL/glew.h>
-#include <GL/glut.h>
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {
@@ -12,7 +12,30 @@ VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 
 VertexBuffer::~VertexBuffer()
 {
-    glDeleteBuffers(1, &_renderer_id);
+    if (_renderer_id)
+    {
+        glDeleteBuffers(1, &_renderer_id);
+    }
+}
+
+VertexBuffer::VertexBuffer(VertexBuffer&& vb) noexcept
+{
+    *this = std::move(vb);
+}
+
+VertexBuffer& VertexBuffer::operator=(VertexBuffer &&vb) noexcept
+{
+    if (this != &vb)
+    {
+        if (_renderer_id)
+        {
+            glDeleteBuffers(1, &_renderer_id);
+        }
+
+        _renderer_id = vb._renderer_id;
+        vb._renderer_id = 0;
+    }
+    return *this;
 }
 
 void VertexBuffer::bind() const

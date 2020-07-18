@@ -5,8 +5,11 @@
 class Texture
 {
 public:
-    Texture(std::string const &file_path);
+    Texture(std::string const& file_path);
     ~Texture();
+
+    Texture(Texture&& t) noexcept;
+    Texture& operator=(Texture&& t) noexcept;
 
     Texture(Texture const&) = delete;
     Texture& operator=(Texture const&) = delete;
@@ -21,6 +24,5 @@ public:
 private:
     unsigned int _renderer_id;
     std::string _file_path;
-    unsigned char *_local_buffer;
     int _width, _height, _bpp;
 };

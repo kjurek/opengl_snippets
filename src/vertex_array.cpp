@@ -7,7 +7,30 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
-    glDeleteVertexArrays(1, &_renderer_id);
+    if (_renderer_id)
+    {
+        glDeleteVertexArrays(1, &_renderer_id);
+    }
+}
+
+VertexArray::VertexArray(VertexArray&& va) noexcept
+{
+    *this = std::move(va);
+}
+
+VertexArray& VertexArray::operator=(VertexArray&& va) noexcept
+{
+    if (this != &va)
+    {
+        if (_renderer_id)
+        {
+            glDeleteVertexArrays(1, &_renderer_id);
+        }
+
+        _renderer_id = va._renderer_id;
+        va._renderer_id = 0;
+    }
+    return *this;
 }
 
 void VertexArray::add_buffer(VertexBuffer const &vb, VertexBufferLayout const &vbl) const

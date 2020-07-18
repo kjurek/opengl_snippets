@@ -1,7 +1,7 @@
 #include "index_buffer.h"
 
 #include <GL/glew.h>
-#include <GL/glut.h>
+#include <utility>
 
 IndexBuffer::IndexBuffer(void const* data, unsigned int count)
     :   _count(count)
@@ -13,7 +13,32 @@ IndexBuffer::IndexBuffer(void const* data, unsigned int count)
 
 IndexBuffer::~IndexBuffer()
 {
-    glDeleteBuffers(1, &_renderer_id);
+    if (_renderer_id)
+    {
+        glDeleteBuffers(1, &_renderer_id);
+    }
+}
+
+IndexBuffer::IndexBuffer(IndexBuffer&& ib) noexcept
+{
+    *this = std::move(ib);
+}
+
+IndexBuffer& IndexBuffer::operator=(IndexBuffer&& ib) noexcept
+{
+    if (this != &ib)
+    {
+        if (_renderer_id)
+        {
+            glDeleteBuffers(1, &_renderer_id);
+        }
+        _renderer_id = ib._renderer_id;
+        _count = ib._count;
+
+        ib._renderer_id = 0;
+        ib._count = 0;
+    }
+    return *this;
 }
 
 void IndexBuffer::bind() const

@@ -27,7 +27,31 @@ Shader::Shader(std::string const& vertex_shader_path, std::string const& fragmen
 
 Shader::~Shader()
 {
-    glDeleteProgram(_renderer_id);
+    if (_renderer_id)
+    {
+        glDeleteProgram(_renderer_id);
+    }
+}
+
+Shader::Shader(Shader&& s) noexcept
+{
+    *this = std::move(s);
+}
+
+Shader& Shader::operator=(Shader&& s) noexcept
+{
+    if (this != &s)
+    {
+        if (_renderer_id)
+        {
+            glDeleteProgram(_renderer_id);
+        }
+        _renderer_id = s._renderer_id;
+        _uniform_location_cache = std::move(s._uniform_location_cache);
+
+        s._renderer_id = 0;
+    }
+    return *this;
 }
 
 void Shader::bind() const

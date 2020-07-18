@@ -6,6 +6,9 @@ public:
     VertexBuffer(void const* data, unsigned int size);
     ~VertexBuffer();
 
+    VertexBuffer(VertexBuffer&& vb) noexcept;
+    VertexBuffer& operator=(VertexBuffer&& vb) noexcept;
+
     VertexBuffer(VertexBuffer const&) = delete;
     VertexBuffer& operator=(VertexBuffer const&) = delete;
 
